@@ -93,7 +93,7 @@ func (w *ComposeStackManager) fetchEndpointProxy(endpoint *portainer.Endpoint) (
 		return "", nil, err
 	}
 
-	return fmt.Sprintf("tcp://127.0.0.1:%d", proxy.Port), proxy, nil
+	return fmt.Sprintf("http://127.0.0.1:%d", proxy.Port), proxy, nil
 }
 
 func createEnvFile(stack *portainer.Stack) (string, error) {

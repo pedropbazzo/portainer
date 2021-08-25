@@ -91,7 +91,6 @@ func (deployer *KubernetesDeployer) Deploy(request *http.Request, endpoint *port
 
 	args := make([]string, 0)
 
-	var proxy *factory.ProxyServer
 	if endpoint.Type != portainer.KubernetesLocalEnvironment {
 		url := endpoint.URL
 		switch endpoint.Type {
@@ -101,7 +100,7 @@ func (deployer *KubernetesDeployer) Deploy(request *http.Request, endpoint *port
 				return "", errors.WithMessage(err, "failed generating endpoint URL")
 			}
 			url = agentUrl
-			proxy = agentProxy
+			defer agentProxy.Close()
 		case portainer.EdgeAgentOnKubernetesEnvironment:
 			url, err = deployer.getEdgeUrl(endpoint)
 			if err != nil {
@@ -124,11 +123,7 @@ func (deployer *KubernetesDeployer) Deploy(request *http.Request, endpoint *port
 
 	output, err := cmd.Output()
 	if err != nil {
-		return "", errors.New(stderr.String())
-	}
-
-	if proxy != nil {
-		proxy.Close()
+		return "", errors.Wrapf(err, "failed to execute kubectl command: %q", stderr.String())
 	}
 
 	return string(output), nil

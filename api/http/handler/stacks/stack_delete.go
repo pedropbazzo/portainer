@@ -157,8 +157,9 @@ func (handler *Handler) deleteExternalStack(r *http.Request, w http.ResponseWrit
 	}
 
 	stack = &portainer.Stack{
-		Name: stackName,
-		Type: portainer.DockerSwarmStack,
+		Name:   stackName,
+		Type:   portainer.DockerSwarmStack,
+		Status: portainer.StackStatusActive,
 	}
 
 	err = handler.deleteStack(stack, endpoint)
@@ -170,6 +171,10 @@ func (handler *Handler) deleteExternalStack(r *http.Request, w http.ResponseWrit
 }
 
 func (handler *Handler) deleteStack(stack *portainer.Stack, endpoint *portainer.Endpoint) error {
+	if stack.Status == portainer.StackStatusInactive {
+		return nil
+	}
+
 	if stack.Type == portainer.DockerSwarmStack {
 		return handler.SwarmStackManager.Remove(stack, endpoint)
 	}

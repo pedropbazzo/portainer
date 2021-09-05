@@ -96,12 +96,12 @@ angular.module('portainer.app').factory('FileUploadService', [
       });
     };
 
-    service.createEdgeStack = function createEdgeStack({ edgeGroups, ...payload }, file) {
+    service.createEdgeStack = function createEdgeStack({ EdgeGroups, ...payload }, file) {
       return Upload.upload({
         url: 'api/edge_stacks?method=file',
         data: {
           file,
-          EdgeGroups: Upload.json(edgeGroups),
+          EdgeGroups: Upload.json(EdgeGroups),
           ...payload,
         },
         ignoreLoadingBar: true,

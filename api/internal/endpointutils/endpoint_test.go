@@ -1,4 +1,4 @@
-package endpoint
+package endpointutils
 
 import (
 	"testing"

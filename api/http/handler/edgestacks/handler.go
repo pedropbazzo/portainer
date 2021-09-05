@@ -61,7 +61,7 @@ func (handler *Handler) convertAndStoreKubeManifestIfNeeded(edgeStack *portainer
 		return fmt.Errorf("unable to retrieve Compose file from disk: %w", err)
 	}
 
-	kompose, err := handler.KubernetesDeployer.ConvertCompose(string(composeConfig))
+	kompose, err := handler.KubernetesDeployer.ConvertCompose(composeConfig)
 	if err != nil {
 		return fmt.Errorf("failed converting compose file to kubernetes manifest: %w", err)
 	}

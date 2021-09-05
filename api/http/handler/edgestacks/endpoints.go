@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	portainer "github.com/portainer/portainer/api"
-	endpointutils "github.com/portainer/portainer/api/internal/endpoint"
+	"github.com/portainer/portainer/api/internal/endpointutils"
 )
 
 func hasKubeEndpoint(endpointService portainer.EndpointService, endpointIDs []portainer.EndpointID) (bool, error) {

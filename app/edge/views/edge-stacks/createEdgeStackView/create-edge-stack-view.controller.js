@@ -208,6 +208,8 @@ export default class CreateEdgeStackViewController {
 
   onChangeDeploymentType(deploymentType) {
     this.formValues.DeploymentType = deploymentType;
+    this.state.Method = 'editor';
+    this.formValues.StackFileContent = '';
   }
 
   formIsInvalid() {

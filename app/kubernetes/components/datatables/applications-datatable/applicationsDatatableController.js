@@ -29,10 +29,10 @@ angular.module('portainer.docker').controller('KubernetesApplicationsDatatableCo
 
     this.expandItem = function (item, expanded) {
       item.Expanded = expanded;
-      if (item.Expanded && !this.state.expandedItems.includes(item.Id)) {
-        this.state.expandedItems = [...this.state.expandedItems, item.Id];
-      } else {
+      if (!item.Expanded) {
         this.state.expandedItems = this.state.expandedItems.filter((id) => id !== item.Id);
+      } else if (item.Expanded && !this.state.expandedItems.includes(item.Id)) {
+        this.state.expandedItems = [...this.state.expandedItems, item.Id];
       }
       DatatableService.setDataTableExpandedItems(this.tableKey, this.state.expandedItems);
     };
